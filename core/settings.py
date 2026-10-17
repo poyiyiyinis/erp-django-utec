@@ -161,7 +161,7 @@ JAZZMIN_SETTINGS = {
 
     # Apariencia
     'related_modal_active':     True,
-    'custom_css':               'erp_custom.css',   # archivo en static/
+    'custom_css': None,
     'show_sidebar':             True,
     'navigation_expanded':      True,
     'hide_apps':                [],
