@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}ERP Django{% endblock %} · CBTis198</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --bg: #07051a;
+            --bg-dark: #0b0620;
+
+            --purple: #8b22ff;
+            --purple-light: #b548ff;
+
+            --green: #52ff38;
+            --green-dark: #22b51c;
+
+            --white: #f7f5ff;
+            --text: #d8d3ec;
+            --muted: #9690b2;
+
+            --card: rgba(16, 9, 43, .92);
+
+            --shadow-purple:
+                0 0 20px rgba(139, 34, 255, .28);
+
+            --shadow-green:
+                0 0 20px rgba(82, 255, 56, .22);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+
+            color: var(--white);
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(116, 0, 255, .30),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 0% 80%,
+                    rgba(72, 0, 170, .20),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #050311 0%,
+                    #10052b 50%,
+                    #050313 100%
+                );
+
+            background-attachment: fixed;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .erp-navbar {
+            width: 100%;
+            min-height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 10px 4%;
+
+            background: rgba(5, 4, 20, .96);
+
+            border-bottom:
+                1px solid rgba(139, 34, 255, .55);
+
+            box-shadow:
+                0 5px 25px rgba(0, 0, 0, .45);
+
+            position: relative;
+            z-index: 100;
+        }
+
+
+        /* =====================================================
+           LOGO + NOMBRE
+        ===================================================== */
+
+        .erp-brand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            flex-shrink: 0;
+        }
+
+        .erp-brand {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            color: white !important;
+
+            text-decoration: none;
+
+            font-size: 21px;
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+        .erp-brand-icon {
+            width: 35px;
+            height: 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #a337ff,
+                    #4b00b5
+                );
+
+            box-shadow:
+                0 0 16px rgba(139, 34, 255, .60);
+
+            font-size: 19px;
+        }
+
+        .erp-brand-django {
+            color: #a932ff;
+        }
+
+        .erp-name {
+            margin-top: 3px;
+            margin-left: 45px;
+
+            color: #8f88aa;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           LINKS
+        ===================================================== */
+
+        .erp-nav-links {
+            display: flex;
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            margin-left: auto;
+        }
+
+        .erp-nav-link {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 8px 14px;
+
+            color: #ded9ed !important;
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            border:
+                1px solid rgba(139, 34, 255, .80);
+
+            border-radius: 20px;
+
+            background:
+                rgba(80, 15, 145, .08);
+
+            transition:
+                .2s ease;
+        }
+
+        .erp-nav-link:hover {
+            color: white !important;
+
+            background:
+                rgba(139, 34, 255, .20);
+
+            box-shadow:
+                0 0 14px rgba(139, 34, 255, .45);
+
+            transform:
+                translateY(-1px);
+        }
+
+        .erp-nav-link.green {
+            border-color:
+                rgba(82, 255, 56, .75);
+        }
+
+        .erp-nav-link.green:hover {
+            background:
+                rgba(82, 255, 56, .12);
+
+            box-shadow:
+                0 0 14px rgba(82, 255, 56, .30);
+        }
+
+
+        /* =====================================================
+           CONTENIDO
+        ===================================================== */
+
+        .erp-main {
+            min-height:
+                calc(100vh - 78px);
+
+            padding:
+                30px 4%
+                50px;
+        }
+
+
+        /* =====================================================
+           CARDS GENERALES
+        ===================================================== */
+
+        .erp-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(22, 11, 55, .95),
+                    rgba(10, 7, 30, .95)
+                );
+
+            border:
+                1px solid rgba(139, 34, 255, .55);
+
+            border-radius:
+                12px;
+
+            color:
+                var(--white);
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, .30);
+
+            transition:
+                .2s ease;
+        }
+
+        .erp-card:hover {
+            border-color:
+                var(--purple-light);
+
+            box-shadow:
+                var(--shadow-purple);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =====================================================
+           TITULOS
+        ===================================================== */
+
+        .erp-page-title {
+            color:
+                white;
+
+            border-bottom:
+                1px solid rgba(139, 34, 255, .35);
+
+            padding-bottom:
+                12px;
+
+            margin-bottom:
+                25px;
+        }
+
+        .erp-page-title h2 {
+            color:
+                white;
+
+            font-weight:
+                800;
+        }
+
+
+        /* =====================================================
+           BOTONES
+        ===================================================== */
+
+        .btn-erp-primary {
+            display:
+                inline-block;
+
+            padding:
+                9px 18px;
+
+            color:
+                white !important;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7620db,
+                    #4d00a8
+                );
+
+            border:
+                1px solid #a43aff;
+
+            border-radius:
+                8px;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                600;
+
+            transition:
+                .2s ease;
+        }
+
+        .btn-erp-primary:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #9d38ff,
+                    #6411c4
+                );
+
+            box-shadow:
+                0 0 15px rgba(139, 34, 255, .45);
+        }
+
+
+        /* =====================================================
+           BADGES
+        ===================================================== */
+
+        .badge-erp-gold {
+            display:
+                inline-block;
+
+            padding:
+                6px 13px;
+
+            border-radius:
+                20px;
+
+            color:
+                #d6a8ff;
+
+            background:
+                rgba(139, 34, 255, .12);
+
+            border:
+                1px solid rgba(139, 34, 255, .80);
+
+            font-size:
+                12px;
+
+            font-weight:
+                700;
+        }
+
+
+        /* =====================================================
+           ALERTAS
+        ===================================================== */
+
+        .erp-alert-danger,
+        .erp-alert-info,
+        .erp-alert-success {
+            padding:
+                13px 17px;
+
+            margin-bottom:
+                12px;
+
+            border-radius:
+                9px;
+
+            background:
+                rgba(15, 8, 35, .94);
+
+            color:
+                white;
+        }
+
+        .erp-alert-danger {
+            border:
+                1px solid #ff3c62;
+        }
+
+        .erp-alert-info {
+            border:
+                1px solid #8b22ff;
+        }
+
+        .erp-alert-success {
+            border:
+                1px solid #52ff38;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .erp-footer {
+            padding:
+                16px;
+
+            text-align:
+                center;
+
+            color:
+                #77708f;
+
+            font-size:
+                12px;
+
+            background:
+                rgba(4, 3, 15, .90);
+
+            border-top:
+                1px solid rgba(139, 34, 255, .25);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .erp-navbar {
+                flex-wrap:
+                    wrap;
+
+                gap:
+                    10px;
+
+                padding:
+                    12px 3%;
+            }
+
+            .erp-nav-links {
+                order:
+                    3;
+
+                width:
+                    100%;
+
+                justify-content:
+                    flex-end;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .erp-navbar {
+                padding:
+                    12px 15px;
+            }
+
+            .erp-brand {
+                font-size:
+                    18px;
+            }
+
+            .erp-nav-links {
+                justify-content:
+                    center;
+            }
+
+            .erp-nav-link {
+                padding:
+                    7px 10px;
+
+                font-size:
+                    11px;
+            }
+
+            .erp-main {
+                padding:
+                    20px 15px 40px;
+            }
+
+        }
+
+    </style>
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav class="erp-navbar">
+
+
+        <!-- LOGO + NOMBRE -->
+
+        <div class="erp-brand-container">
+
+            <a
+                href="/"
+                class="erp-brand"
+            >
+
+                <span class="erp-brand-icon">
+                    📦
+                </span>
+
+                <span>
+                    ERP
+                    <span class="erp-brand-django">
+                        Django
+                    </span>
+                </span>
+
+            </a>
+
+            <div class="erp-name">
+                Braulio H.P
+            </div>
+
+        </div>
+
+
+        <!-- LINKS A LA DERECHA -->
+
+        <div class="erp-nav-links">
+
+            <a
+                class="erp-nav-link"
+                href="{% url 'productos:lista' %}"
+            >
+                📦 Productos
+            </a>
+
+            <a
+                class="erp-nav-link green"
+                href="{% url 'clientes:lista' %}"
+            >
+                👥 Clientes
+            </a>
+
+            <a
+                class="erp-nav-link"
+                href="{% url 'proveedores:lista' %}"
+            >
+                🚚 Proveedores
+            </a>
+
+            <a
+                class="erp-nav-link green"
+                href="{% url 'ventas:lista' %}"
+            >
+                💰 Ventas
+            </a>
+
+            <a
+                class="erp-nav-link"
+                href="{% url 'reportes:inicio' %}"
+            >
+                📊 Reportes
+            </a>
+
+            <a
+                class="erp-nav-link green"
+                href="/admin/"
+            >
+                ⚙️ Admin
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MENSAJES
+    ===================================================== -->
+
+    {% if messages %}
+
+        <div class="container mt-3">
+
+            {% for m in messages %}
+
+                <div
+                    class="erp-alert-{% if m.tags == 'error' %}danger{% elif m.tags == 'success' %}success{% else %}info{% endif %}"
+                    role="alert"
+                >
+
+                    <span>
+                        {{ m }}
+                    </span>
+
+                    <button
+                        onclick="this.parentElement.style.display='none'"
+                        style="
+                            float:right;
+                            background:none;
+                            border:none;
+                            color:inherit;
+                            cursor:pointer;
+                            font-size:20px;
+                        "
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         CONTENIDO
+    ===================================================== -->
+
+    <main class="erp-main">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer class="erp-footer">
+
+        ERP Django · Django 4.2 LTS ·
+        Fable 5 AzulERP · CBTis198
+
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    {% block extra_js %}{% endblock %}
+
+
+</body>
+</html>
