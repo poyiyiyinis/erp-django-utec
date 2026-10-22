@@ -20,7 +20,7 @@ protegidos por autenticación y 3 roles de acceso.
 | HU-E3-06 | Como vendedor, quiero registrar nuevas ventas con detalles | ✅ | W08 |
 | HU-E3-07 | Como admin, quiero eliminar registros con confirmación | ✅ | W08 |
 | HU-E3-08 | Como dev, quiero autenticación login/logout funcional | ✅ | W09 |
-| HU-E3-09 | Como gerente, quiero 3 roles con permisos diferenciados | 5 | W09 |
+| HU-E3-09 | Como gerente, quiero 3 roles con permisos diferenciados | ✅ | W09 |
 
 **Total Sprint 2:** 27 puntos
 
