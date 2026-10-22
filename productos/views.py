@@ -1,20 +1,17 @@
-# productos/views.py
-"""Vistas de la app productos — W07.
-
-ListView y DetailView con select_related y paginación.
-Escritura (Create/Update/Delete) se implementa en W08.
-"""
-# productos/views.py — agregar los imports al inicio del archivo:
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth.views import redirect_to_login
 from django.views.generic import (
-    CreateView, DeleteView, DetailView, ListView, UpdateView
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
 )
-from .forms import ProductoForm
 
 from .models import Producto
-
+from .forms import ProductoForm
 
 class ProductoListView(ListView):
     """Lista paginada de productos activos.
@@ -97,21 +94,41 @@ class ProductoUpdateView(LoginRequiredMixin, UpdateView):
         )
         return response
 
-
-class ProductoDeleteView(LoginRequiredMixin, DeleteView):
+# Reemplazar la clase ProductoDeleteView:
+class ProductoDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Confirmación y borrado de un producto.
 
-    SOLO acepta POST. El template debe incluir
-    un formulario con {% csrf_token %} para evitar CSRF.
+
+    Requiere permiso 'productos.delete_producto'.
+    Sin autenticación: redirige al login (302).
+    Sin permiso: HTTP 403 Forbidden.
     """
 
-    model         = Producto
+
+    model = Producto
     template_name = 'productos/eliminar.html'
-    pk_url_kwarg  = 'producto_id'
-    success_url   = reverse_lazy('productos:lista')
+    pk_url_kwarg = 'producto_id'
+    success_url = reverse_lazy('productos:lista')
+    permission_required = 'productos.delete_producto'
+    raise_exception = True
+
+
+    def handle_no_permission(self):
+        """Redirige al login si no está autenticado; si no, responde 403."""
+        if not self.request.user.is_authenticated:
+            return redirect_to_login(
+                self.request.get_full_path(),
+                self.get_login_url(),
+                self.get_redirect_field_name()
+            )
+
+
+        return super().handle_no_permission()
+
 
     def form_valid(self, form):
-        nombre   = self.object.nombre
+        """Elimina el producto y muestra un mensaje de éxito."""
+        nombre = self.object.nombre
         response = super().form_valid(form)
         messages.success(
             self.request,

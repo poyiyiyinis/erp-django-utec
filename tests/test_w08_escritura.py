@@ -10,6 +10,7 @@ Resultado esperado:
 from decimal import Decimal
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
+from django.contrib.auth.models import Permission
 from django.urls import reverse
 from clientes.models    import Cliente
 from productos.models   import Categoria, Producto
@@ -81,6 +82,8 @@ class ProductoEscrituraTest(TestCase):
         )
     def test_delete_elimina_producto(self):
         """POST /productos/<id>/eliminar/ → borra el producto y redirige."""
+        perm = Permission.objects.get(codename='delete_producto')
+        self.user.user_permissions.add(perm)
         self.client.force_login(self.user)
         pk = self.prod.pk
         r  = self.client.post(
@@ -151,12 +154,15 @@ class VentaEscrituraTest(TestCase):
         self.assertEqual(r.status_code, 302)
     def test_post_valido_crea_venta(self):
         """POST válido crea Venta + DetalleVenta y redirige al detalle."""
+        perm = Permission.objects.get(codename='add_venta')
+        self.user.user_permissions.add(perm)
         self.client.force_login(self.user)
         r = self.client.post(reverse('ventas:crear'), {
             'cliente':         self.cli.pk,
             'producto':        self.prod.pk,
             'cantidad':        2,
             'precio_unitario': '100.00',
+            
         })
         self.assertEqual(r.status_code, 302)
         self.assertEqual(Venta.objects.count(), 1)
