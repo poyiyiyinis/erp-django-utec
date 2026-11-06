@@ -17,7 +17,7 @@ actualizando automáticamente el estado del pedido.
 | HU-E5-05 | Como cliente, quiero proceder al pago con mis datos | ✅ | W14 |
 | HU-E5-06 | Como cliente, quiero pagar con tarjeta (Stripe sandbox) | ✅ | W14 |
 | HU-E5-07 | Como sistema, quiero confirmar el pago vía webhook | ✅ | W15 |
-| HU-E5-08 | Como admin, quiero que el stock se descuente al confirmar | 3 | W15 |
+| HU-E5-08 | Como admin, quiero que el stock se descuente al confirmar | ✅ | W15 |
 
 **Total Sprint 4:** 26 puntos
 
