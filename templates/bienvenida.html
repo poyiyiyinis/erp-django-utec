@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+    /* =========================================
+       HERO
+    ========================================= */
+
+    .erp-hero {
+        text-align: center;
+        padding: 5px 20px 30px;
+    }
+
+    .erp-logo {
+        width: 58px;
+        height: 58px;
+
+        margin: 0 auto 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 14px;
+
+        background:
+            linear-gradient(135deg, #9b32ff, #5100bd);
+
+        box-shadow:
+            0 0 25px rgba(139, 34, 255, .65);
+
+        font-size: 32px;
+    }
+
+    .erp-hero h1 {
+        margin: 0;
+
+        font-size: clamp(38px, 5vw, 57px);
+        font-weight: 800;
+        letter-spacing: -2px;
+
+        color: white;
+
+        text-shadow:
+            0 0 20px rgba(139, 34, 255, .35);
+    }
+
+    .erp-hero h1 span {
+        color: #a932ff;
+    }
+
+    .erp-subtitle {
+        margin-top: 8px;
+        margin-bottom: 16px;
+
+        color: #aaa4c4;
+        font-size: 16px;
+    }
+
+    /* =========================================
+       BADGES
+    ========================================= */
+
+    .erp-badges {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .erp-badge {
+        padding: 7px 15px;
+
+        border: 1px solid #922aff;
+        border-radius: 20px;
+
+        background: rgba(83, 20, 140, .18);
+
+        color: #d7a7ff;
+
+        font-size: 12px;
+        font-weight: 700;
+
+        box-shadow:
+            0 0 10px rgba(139, 34, 255, .12);
+    }
+
+    .erp-badge.green {
+        border-color: #3cff2c;
+        color: #72ff65;
+
+        background: rgba(30, 120, 20, .10);
+    }
+
+    /* =========================================
+       TARJETAS
+    ========================================= */
+
+    .erp-modules {
+        max-width: 1260px;
+        margin: 20px auto 0;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 22px;
+    }
+
+    .module-card {
+        position: relative;
+
+        min-height: 160px;
+
+        padding: 27px 29px;
+
+        border-radius: 13px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(25, 13, 65, .96),
+                rgba(12, 8, 35, .96)
+            );
+
+        border: 2px solid #7c1cff;
+
+        overflow: hidden;
+
+        cursor: pointer;
+
+        transition:
+            transform .2s ease,
+            box-shadow .2s ease,
+            border-color .2s ease;
+    }
+
+    .module-card::before {
+        content: "";
+
+        position: absolute;
+
+        width: 170px;
+        height: 170px;
+
+        right: -70px;
+        bottom: -90px;
+
+        border-radius: 50%;
+
+        background: rgba(139, 34, 255, .12);
+
+        filter: blur(10px);
+    }
+
+    .module-card:hover {
+        transform: translateY(-5px);
+
+        border-color: #ae45ff;
+
+        box-shadow:
+            0 0 25px rgba(139, 34, 255, .30),
+            inset 0 0 30px rgba(139, 34, 255, .04);
+    }
+
+    .module-card.green {
+        border-color: #43ef31;
+    }
+
+    .module-card.green:hover {
+        border-color: #6aff5a;
+
+        box-shadow:
+            0 0 25px rgba(82, 255, 56, .22),
+            inset 0 0 30px rgba(82, 255, 56, .04);
+    }
+
+    /* =========================================
+       ICONO
+    ========================================= */
+
+    .module-icon {
+        width: 54px;
+        height: 54px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 9px;
+
+        font-size: 35px;
+
+        position: relative;
+        z-index: 2;
+    }
+
+    /* =========================================
+       TEXTO
+    ========================================= */
+
+    .module-card h2 {
+        position: relative;
+        z-index: 2;
+
+        margin: 0;
+
+        color: white;
+
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+    .module-card p {
+        position: relative;
+        z-index: 2;
+
+        margin: 3px 0 0;
+
+        color: #aaa4c4;
+
+        font-size: 14px;
+    }
+
+    /* =========================================
+       FLECHA
+    ========================================= */
+
+    .module-arrow {
+        position: absolute;
+
+        right: 21px;
+        bottom: 20px;
+
+        width: 32px;
+        height: 32px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        color: white;
+
+        border: 1px solid #8b22ff;
+        background: rgba(139, 34, 255, .25);
+
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    .green .module-arrow {
+        border-color: #46ef34;
+        background: rgba(82, 255, 56, .15);
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (max-width: 900px) {
+
+        .erp-modules {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media (max-width: 600px) {
+
+        .erp-modules {
+            grid-template-columns: 1fr;
+        }
+
+        .erp-hero h1 {
+            font-size: 38px;
+        }
+
+        .module-card {
+            min-height: 145px;
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================
+     ENCABEZADO
+========================================= -->
+
+<section class="erp-hero">
+
+    <div class="erp-logo">
+        📦
+    </div>
+
+    <h1>
+        ERP <span>Django</span>
+    </h1>
+
+    <p class="erp-subtitle">
+        Sistema de gestión empresarial · CBTis198
+    </p>
+
+    <div class="erp-badges">
+
+        <span class="erp-badge">
+            Django 4.2 LTS
+        </span>
+
+        <span class="erp-badge green">
+            Python 3.11
+        </span>
+
+        <span class="erp-badge">
+            Fable 5 AzulERP
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     MÓDULOS
+========================================= -->
+
+<section class="erp-modules">
+
+    {% for m in modulos %}
+
+        <div
+            class="module-card {% if forloop.counter|divisibleby:2 %}green{% endif %}"
+            onclick="window.location.href='{{ m.url }}'"
+        >
+
+            <div class="module-icon">
+                {{ m.icono }}
+            </div>
+
+            <h2>
+                {{ m.nombre }}
+            </h2>
+
+            <p>
+                {{ m.descripcion }}
+            </p>
+
+            <div class="module-arrow">
+                ›
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}
+<p class="erp-subtitle"></p>
