@@ -1,0 +1,19 @@
+name: Reporte diario de ventas
+
+on:
+  schedule:
+    - cron: '15 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  reporte:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutar reporte
+        env:
+          TOKEN: ${{ secrets.REPORTE_DIARIO_TOKEN }}
+        run: |
+          curl --fail --show-error \
+            --request POST \
+            --header "X-Report-Token: $TOKEN" \
+            "https://erp-django-utec-5ax2.onrender.com/interno/reporte-diario/"

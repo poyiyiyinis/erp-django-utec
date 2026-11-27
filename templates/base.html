@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}ERP Django{% endblock %} · CBTis198</title>
+
+    <!-- TIPOGRAFÍAS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --purple: #963bdf;
+            --purple-light: #c77aff;
+            --pink: #ef62b4;
+            --red: #d93670;
+            --gold: #f2c879;
+            --white: #fff8ff;
+            --text: #e7d8f2;
+            --muted: #b6a1c9;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            position: relative;
+            isolation: isolate;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            color: var(--white);
+
+            background:
+                radial-gradient(ellipse at 50% 5%, #46206c, transparent 45%),
+                linear-gradient(135deg, #10071e, #1b0a30 50%, #10071e);
+
+            background-attachment: fixed;
+        }
+
+        /* =====================================
+           FONDO ANIMADO DE AHA
+        ===================================== */
+
+        .aha-scene {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+
+            background:
+                radial-gradient(circle at 80% 25%, rgba(204,67,155,.15), transparent 35%),
+                radial-gradient(circle at 20% 80%, rgba(115,54,207,.18), transparent 35%);
+        }
+
+        /* ESTRELLAS */
+
+        .aha-stars {
+            position: absolute;
+            inset: -200px;
+
+            background-image:
+                radial-gradient(2px 2px at 40px 60px, #fff4cf 99%, transparent),
+                radial-gradient(2px 2px at 130px 180px, #edbaff 99%, transparent),
+                radial-gradient(1px 1px at 250px 90px, white 99%, transparent),
+                radial-gradient(2px 2px at 330px 270px, #ffd9eb 99%, transparent),
+                radial-gradient(1px 1px at 490px 150px, white 99%, transparent),
+                radial-gradient(2px 2px at 600px 320px, #e8b5ff 99%, transparent);
+
+            background-size: 680px 400px;
+            opacity: .75;
+
+            animation: starsMove 25s linear infinite;
+        }
+
+        .aha-stars::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background-image:
+                radial-gradient(1px 1px at 90px 130px, white 99%, transparent),
+                radial-gradient(2px 2px at 280px 50px, #ffb7e0 99%, transparent),
+                radial-gradient(1px 1px at 410px 230px, white 99%, transparent),
+                radial-gradient(2px 2px at 550px 100px, #f7d69b 99%, transparent);
+
+            background-size: 620px 350px;
+
+            animation: starsMove 40s linear infinite reverse;
+        }
+
+        @keyframes starsMove {
+            from {
+                transform: translate(0, 0);
+            }
+            to {
+                transform: translate(-250px, 300px);
+            }
+        }
+
+        /* LUCES FLOTANTES */
+
+        .aha-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: .28;
+
+            animation: glowMove 8s ease-in-out infinite alternate;
+        }
+
+        .aha-glow.one {
+            background: #a52dff;
+            top: 5%;
+            left: -180px;
+        }
+
+        .aha-glow.two {
+            background: #ed3c9d;
+            right: -180px;
+            top: 35%;
+            animation-delay: -4s;
+        }
+
+        .aha-glow.three {
+            background: #e5a64d;
+            bottom: -260px;
+            left: 35%;
+            animation-delay: -2s;
+        }
+
+        @keyframes glowMove {
+            0% {
+                transform: translate(0, 0) scale(.85);
+            }
+            50% {
+                transform: translate(100px, -50px) scale(1.2);
+            }
+            100% {
+                transform: translate(-50px, 70px) scale(1);
+            }
+        }
+
+        /* CINTAS CÓSMICAS */
+
+        .aha-ribbon {
+            position: absolute;
+            width: 850px;
+            height: 280px;
+
+            border: 12px solid transparent;
+            border-top-color: rgba(213,52,128,.30);
+            border-bottom-color: rgba(148,72,227,.25);
+
+            border-radius: 50%;
+
+            filter: drop-shadow(0 0 20px rgba(231,62,164,.35));
+
+            animation: ribbonFloat 12s ease-in-out infinite alternate;
+        }
+
+        .aha-ribbon.one {
+            top: 5%;
+            left: -350px;
+            transform: rotate(-25deg);
+        }
+
+        .aha-ribbon.two {
+            top: 45%;
+            right: -450px;
+            width: 950px;
+            transform: rotate(35deg);
+            animation-delay: -6s;
+        }
+
+        .aha-ribbon.three {
+            bottom: -150px;
+            left: 15%;
+            width: 900px;
+            transform: rotate(-12deg);
+            animation-delay: -3s;
+        }
+
+        @keyframes ribbonFloat {
+            0% {
+                translate: -50px -25px;
+                rotate: -5deg;
+            }
+            50% {
+                translate: 30px 35px;
+                rotate: 5deg;
+            }
+            100% {
+                translate: 80px -20px;
+                rotate: -3deg;
+            }
+        }
+
+        /* MÁSCARAS FLOTANTES */
+
+        .aha-mask {
+            position: absolute;
+            font-size: 48px;
+            opacity: .16;
+
+            filter: drop-shadow(0 0 18px #e89bff);
+
+            animation: maskFloat 7s ease-in-out infinite;
+        }
+
+        .aha-mask.one {
+            top: 20%;
+            left: 7%;
+        }
+
+        .aha-mask.two {
+            top: 65%;
+            right: 9%;
+            animation-delay: -3s;
+            font-size: 60px;
+        }
+
+        .aha-mask.three {
+            top: 80%;
+            left: 40%;
+            animation-delay: -5s;
+            font-size: 35px;
+        }
+
+        @keyframes maskFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(-8deg);
+            }
+            50% {
+                transform: translateY(-35px) rotate(12deg);
+            }
+        }
+
+        /* DESTELLOS */
+
+        .aha-sparkle {
+            position: absolute;
+            color: var(--gold);
+            opacity: .55;
+            font-size: 22px;
+
+            animation: sparkle 2.5s ease-in-out infinite;
+        }
+
+        .aha-sparkle.one {
+            top: 25%;
+            left: 25%;
+        }
+
+        .aha-sparkle.two {
+            top: 65%;
+            right: 25%;
+            animation-delay: -1s;
+        }
+
+        .aha-sparkle.three {
+            top: 45%;
+            left: 85%;
+            animation-delay: -.5s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: .15;
+                transform: scale(.7) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5) rotate(45deg);
+            }
+        }
+
+        /* =====================================
+           NAVBAR
+        ===================================== */
+                .erp-navbar {
+            width: 100%;
+            min-height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+            padding: 10px 4%;
+
+            background: rgba(15,7,27,.80);
+
+            border-bottom: 1px solid rgba(206,112,255,.55);
+
+            box-shadow: 0 5px 30px rgba(0,0,0,.30);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            position: relative;
+            z-index: 100;
+        }
+
+        .erp-brand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex-shrink: 0;
+        }
+
+        .erp-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: white !important;
+            text-decoration: none;
+
+            font-size: 21px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .erp-brand-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: linear-gradient(135deg,#a947ff,#d53e9c);
+
+            box-shadow: 0 0 20px rgba(190,77,255,.65);
+
+            font-size: 21px;
+        }
+
+        .erp-brand-django {
+            color: #e35bdf;
+        }
+
+        .erp-name {
+            margin-top: 3px;
+            margin-left: 48px;
+            color: #c1a6d4;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* =====================================
+           NAVEGACIÓN
+        ===================================== */
+
+        .erp-nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .erp-nav-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+
+            padding: 8px 12px;
+
+            color: #f2e5ff !important;
+            text-decoration: none;
+            white-space: nowrap;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            border: 1px solid rgba(174,92,255,.85);
+            border-radius: 20px;
+
+            background: rgba(105,44,155,.15);
+
+            transition: .25s ease;
+        }
+
+        .erp-nav-link:hover {
+            color: white !important;
+            background: rgba(180,72,255,.25);
+            border-color: #e8a6ff;
+
+            box-shadow: 0 0 15px rgba(181,86,255,.50);
+
+            transform: translateY(-2px);
+        }
+
+        .erp-nav-link.green {
+            border-color: rgba(239,102,183,.85);
+            background: rgba(210,57,143,.10);
+        }
+
+        .erp-nav-link.green:hover {
+            background: rgba(225,68,158,.25);
+            box-shadow: 0 0 15px rgba(240,90,171,.35);
+        }
+
+        .erp-nav-link.login {
+            border-color: var(--gold);
+            color: #ffe3a8 !important;
+            background: rgba(223,165,81,.10);
+        }
+
+        .erp-nav-link.login:hover {
+            background: rgba(223,165,81,.23);
+            box-shadow: 0 0 18px rgba(242,200,121,.30);
+        }
+
+        /* =====================================
+           MENSAJES
+        ===================================== */
+
+        .erp-messages {
+            position: relative;
+            z-index: 2;
+        }
+
+        .erp-alert-danger,
+        .erp-alert-info,
+        .erp-alert-success {
+            padding: 13px 17px;
+            margin-bottom: 12px;
+            border-radius: 9px;
+            background: rgba(25,11,43,.94);
+            color: white;
+        }
+
+        .erp-alert-danger {
+            border: 1px solid #ff537f;
+        }
+
+        .erp-alert-info {
+            border: 1px solid #a64aff;
+        }
+
+        .erp-alert-success {
+            border: 1px solid #e4ae63;
+        }
+
+        /* =====================================
+           CONTENIDO
+        ===================================== */
+
+        .erp-main {
+            position: relative;
+            z-index: 1;
+
+            min-height: calc(100vh - 125px);
+            padding: 30px 4% 50px;
+        }
+
+        /* =====================================
+           TARJETAS GENERALES
+        ===================================== */
+
+        .erp-card {
+            background: linear-gradient(
+                135deg,
+                rgba(54,24,77,.80),
+                rgba(20,10,39,.90)
+            );
+
+            border: 1px solid rgba(193,112,255,.50);
+            border-radius: 14px;
+
+            color: var(--white);
+
+            box-shadow: 0 5px 25px rgba(0,0,0,.25);
+
+            backdrop-filter: blur(12px);
+
+            transition: .25s ease;
+        }
+
+        .erp-card:hover {
+            border-color: var(--pink);
+            box-shadow: 0 0 25px rgba(174,75,255,.28);
+            transform: translateY(-3px);
+        }
+
+        /* =====================================
+           TÍTULOS
+        ===================================== */
+
+        .erp-page-title {
+            color: white;
+            border-bottom: 1px solid rgba(218,125,255,.35);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+        }
+
+        .erp-page-title h2 {
+            color: white;
+            font-weight: 800;
+        }
+
+        /* =====================================
+           BOTONES
+        ===================================== */
+
+        .btn-erp-primary {
+            display: inline-block;
+            padding: 9px 18px;
+
+            color: white !important;
+
+            background: linear-gradient(135deg,#933bda,#c73591);
+
+            border: 1px solid #e28aff;
+            border-radius: 9px;
+
+            text-decoration: none;
+            font-weight: 600;
+
+            transition: .25s ease;
+        }
+
+        .btn-erp-primary:hover {
+            background: linear-gradient(135deg,#b65aff,#e34da9);
+            box-shadow: 0 0 18px rgba(220,83,214,.45);
+            transform: translateY(-2px);
+        }
+
+        /* =====================================
+           BADGES
+        ===================================== */
+
+        .badge-erp-gold {
+            display: inline-block;
+            padding: 6px 13px;
+
+            border-radius: 20px;
+
+            color: #ffdda0;
+            background: rgba(222,155,74,.12);
+            border: 1px solid rgba(242,200,121,.75);
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .erp-footer {
+            position: relative;
+            z-index: 1;
+
+            padding: 16px;
+            text-align: center;
+
+            color: #c5a9d6;
+            font-size: 12px;
+
+            background: rgba(14,6,27,.85);
+
+            border-top: 1px solid rgba(201,105,255,.35);
+
+            backdrop-filter: blur(15px);
+        }
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 1200px) {
+            .erp-navbar {
+                flex-wrap: wrap;
+                padding: 12px 3%;
+            }
+
+            .erp-nav-links {
+                width: 100%;
+                justify-content: center;
+                flex: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .erp-navbar {
+                justify-content: center;
+                padding: 12px 15px;
+            }
+
+            .erp-brand {
+                font-size: 18px;
+            }
+
+            .erp-nav-links {
+                justify-content: center;
+                gap: 6px;
+            }
+
+            .erp-nav-link {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+
+            .erp-main {
+                padding: 20px 15px 40px;
+            }
+
+            .aha-ribbon {
+                opacity: .5;
+            }
+
+            .aha-glow {
+                opacity: .12;
+            }
+        }
+
+        /* =====================================
+           ACCESIBILIDAD
+        ===================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+/* =====================================
+   AHA - FONDO CON MOVIMIENTO VISIBLE
+===================================== */
+
+.aha-scene {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    background: #160820 !important;
+}
+
+/* Luces móviles */
+
+.aha-glow {
+    position: absolute !important;
+    width: 550px !important;
+    height: 550px !important;
+    border-radius: 50% !important;
+    filter: blur(100px) !important;
+    opacity: .48 !important;
+    animation: ahaLightTravel 9s ease-in-out infinite alternate !important;
+}
+
+.aha-glow.one {
+    background: #b52cff !important;
+    left: -200px !important;
+    top: 0 !important;
+}
+
+.aha-glow.two {
+    background: #f02d91 !important;
+    right: -200px !important;
+    top: 20% !important;
+    animation-delay: -4s !important;
+}
+
+.aha-glow.three {
+    background: #a64bff !important;
+    left: 25% !important;
+    bottom: -300px !important;
+    animation-delay: -7s !important;
+}
+
+@keyframes ahaLightTravel {
+    0% {
+        transform: translate(-80px, 50px) scale(.8);
+    }
+    50% {
+        transform: translate(180px, -100px) scale(1.3);
+    }
+    100% {
+        transform: translate(300px, 100px) scale(.9);
+    }
+}
+
+/* Estrellas desplazándose */
+
+.aha-stars {
+    position: absolute !important;
+    inset: -100% 0 !important;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, white 99%, transparent),
+        radial-gradient(2px 2px at 120px 180px, #f7aaff 99%, transparent),
+        radial-gradient(1px 1px at 250px 90px, white 99%, transparent),
+        radial-gradient(2px 2px at 350px 270px, #ffb4d9 99%, transparent),
+        radial-gradient(1px 1px at 450px 150px, white 99%, transparent);
+    background-size: 500px 350px !important;
+    animation: ahaStarsFall 12s linear infinite !important;
+    opacity: .85 !important;
+}
+
+@keyframes ahaStarsFall {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(700px);
+    }
+}
+
+/* Cintas ondulantes */
+
+.aha-ribbon {
+    animation: ahaRibbonMove 8s ease-in-out infinite alternate !important;
+    opacity: .8 !important;
+}
+
+.aha-ribbon.one {
+    animation-delay: 0s !important;
+}
+
+.aha-ribbon.two {
+    animation-delay: -3s !important;
+}
+
+.aha-ribbon.three {
+    animation-delay: -5s !important;
+}
+
+@keyframes ahaRibbonMove {
+    0% {
+        translate: -100px -50px;
+        rotate: -10deg;
+        scale: .9;
+    }
+    50% {
+        translate: 100px 70px;
+        rotate: 10deg;
+        scale: 1.1;
+    }
+    100% {
+        translate: -50px 120px;
+        rotate: -5deg;
+        scale: 1;
+    }
+}
+
+/* Máscaras flotantes */
+
+.aha-mask {
+    animation: ahaMaskMove 5s ease-in-out infinite alternate !important;
+}
+
+@keyframes ahaMaskMove {
+    from {
+        transform: translateY(30px) rotate(-15deg);
+    }
+    to {
+        transform: translateY(-50px) rotate(20deg);
+    }
+}
+
+/* Destellos */
+
+.aha-sparkle {
+    animation: ahaSparkle 1.8s ease-in-out infinite alternate !important;
+}
+
+@keyframes ahaSparkle {
+    from {
+        opacity: .1;
+        transform: scale(.5) rotate(0deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1.8) rotate(90deg);
+    }
+}
+
+/* Contenido siempre delante */
+
+.erp-navbar,
+.erp-main,
+.erp-footer {
+    position: relative;
+    z-index: 2;
+}
+        /* =====================================
+           SILUETA DE AHA - FORMA DE EÓN
+           Decoración de fondo en el lado derecho
+        ===================================== */
+
+        .aha-eon-silhouette {
+            position: absolute;
+            z-index: 1;
+            right: clamp(-65px, 1vw, 25px);
+            bottom: 2vh;
+            width: min(39vw, 510px);
+            height: 82vh;
+            min-height: 540px;
+            overflow: visible;
+            opacity: .23;
+            pointer-events: none;
+            filter:
+                drop-shadow(0 0 18px rgba(194, 70, 255, .55))
+                drop-shadow(0 0 55px rgba(225, 48, 151, .24));
+            transform-origin: 50% 85%;
+            animation: ahaEonDrift 11s ease-in-out infinite alternate;
+        }
+
+        .aha-eon-silhouette .eon-body {
+            fill: url(#ahaEonGradient);
+            stroke: rgba(232, 163, 255, .42);
+            stroke-width: 2;
+            stroke-linejoin: round;
+        }
+
+        .aha-eon-silhouette .eon-detail {
+            fill: none;
+            stroke: url(#ahaEonGold);
+            stroke-width: 3;
+            stroke-linecap: round;
+            opacity: .65;
+        }
+
+        .aha-eon-silhouette .eon-mask {
+            fill: #16071f;
+            stroke: rgba(246, 184, 255, .8);
+            stroke-width: 2.5;
+        }
+
+        .aha-eon-silhouette .eon-eye {
+            fill: #ffd58c;
+            filter: url(#ahaEonGlow);
+        }
+
+        @keyframes ahaEonDrift {
+            from {
+                transform: translate3d(0, 10px, 0) rotate(-1deg);
+            }
+            to {
+                transform: translate3d(0, -13px, 0) rotate(1deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .aha-eon-silhouette {
+                right: -115px;
+                width: 390px;
+                height: 76vh;
+                min-height: 500px;
+                opacity: .13;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .aha-eon-silhouette {
+                animation: none !important;
+            }
+        }
+
+    </style>
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+<body>
+<!-- =====================================
+         ESCENARIO ANIMADO DE AHA
+    ===================================== -->
+
+    <div class="aha-scene" aria-hidden="true">
+
+        <!-- Silueta decorativa de Aha en su forma de Eón -->
+        <svg class="aha-eon-silhouette"
+             viewBox="0 0 600 760"
+             role="img"
+             aria-label="Máscaras teatrales flotantes inspiradas en Aha, el Eón de la Euforia"
+             xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="ahaEonGradient" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#ffcf9a"/>
+                    <stop offset=".48" stop-color="#d85b70"/>
+                    <stop offset="1" stop-color="#54205f"/>
+                </linearGradient>
+                <linearGradient id="ahaEonGold" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#ffe2a2"/>
+                    <stop offset=".5" stop-color="#ff8d83"/>
+                    <stop offset="1" stop-color="#c47aff"/>
+                </linearGradient>
+                <filter id="ahaEonGlow" x="-200%" y="-200%" width="500%" height="500%">
+                    <feGaussianBlur stdDeviation="5" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+            </defs>
+
+            <!-- Aha no tiene una silueta humanoide única: su presencia se representa
+                 como un torbellino de máscaras teatrales y objetos de carnaval. -->
+            <g opacity=".9">
+                <path class="eon-detail" stroke-dasharray="5 17"
+                      d="M95 370 C35 190 175 55 300 85 C455 35 575 205 500 390 C455 550 180 650 85 455"/>
+                <path class="eon-detail" stroke-dasharray="2 20" opacity=".55"
+                      d="M145 135 C290 5 515 130 520 320 C540 510 330 680 145 565"/>
+
+                <!-- Máscara central: rostro de comedia, sonrisa exagerada -->
+                <path class="eon-body" d="M300 190 C240 190 205 235 215 305 C222 365 263 405 300 420 C337 405 378 365 385 305 C395 235 360 190 300 190Z"/>
+                <path class="eon-mask" d="M300 218 C252 218 230 253 239 306 C246 350 274 379 300 391 C326 379 354 350 361 306 C370 253 348 218 300 218Z"/>
+                <path fill="#ffcf9a" opacity=".9" d="M250 282 Q274 250 291 282 Q274 299 250 282Z"/>
+                <path fill="#ffcf9a" opacity=".9" d="M350 282 Q326 250 309 282 Q326 299 350 282Z"/>
+                <path d="M260 330 Q300 380 340 330 Q300 350 260 330Z" fill="#260d28" stroke="#ffcf9a" stroke-width="3"/>
+                <path class="eon-detail" d="M300 194 L300 155 M278 202 Q300 220 322 202"/>
+
+                <!-- Máscara sonriente secundaria -->
+                <g transform="translate(95 205) rotate(-18 75 75)">
+                    <path class="eon-body" d="M75 5 C25 5 5 42 15 92 C23 130 49 151 75 160 C101 151 127 130 135 92 C145 42 125 5 75 5Z"/>
+                    <path class="eon-mask" d="M75 25 C38 25 23 53 31 91 Q42 127 75 139 Q108 127 119 91 C127 53 112 25 75 25Z"/>
+                    <path fill="#ffd69a" d="M42 72 Q58 55 69 75 Q56 88 42 72Z M108 72 Q92 55 81 75 Q94 88 108 72Z"/>
+                    <path d="M43 99 Q75 139 107 99 Q75 116 43 99Z" fill="#f4a0a0"/>
+                </g>
+
+                <!-- Máscara de tragedia -->
+                <g transform="translate(395 335) rotate(16 65 65)">
+                    <path class="eon-body" d="M65 3 C20 3 3 37 12 82 C20 119 43 143 65 151 C87 143 110 119 118 82 C127 37 110 3 65 3Z"/>
+                    <path class="eon-mask" d="M65 22 C32 22 19 49 27 83 Q38 119 65 132 Q92 119 103 83 C111 49 98 22 65 22Z"/>
+                    <path fill="#ffd69a" d="M32 65 Q48 48 61 69 Q47 80 32 65Z M98 65 Q82 48 69 69 Q83 80 98 65Z"/>
+                    <path d="M42 112 Q65 79 88 112 Q65 101 42 112Z" fill="#260d28"/>
+                </g>
+
+                <!-- Máscara oval con ojo central -->
+                <g transform="translate(235 35) rotate(8 65 65)">
+                    <path class="eon-body" d="M65 0 C20 0 0 35 8 78 C17 119 42 143 65 153 C88 143 113 119 122 78 C130 35 110 0 65 0Z"/>
+                    <path class="eon-mask" d="M65 20 C32 20 18 47 25 80 Q38 118 65 133 Q92 118 105 80 C112 47 98 20 65 20Z"/>
+                    <path class="eon-eye" d="M35 75 Q65 35 95 75 Q65 112 35 75Z"/>
+                    <ellipse cx="65" cy="75" rx="8" ry="19" fill="#28102d"/>
+                </g>
+
+                <!-- Cartas, rombos y cintas de carnaval -->
+                <g class="eon-detail">
+                    <path d="M75 480 L130 455 L155 510 L100 535Z"/>
+                    <path d="M455 120 L505 95 L530 150 L480 175Z"/>
+                    <path d="M255 525 L300 495 L345 525 L300 555Z"/>
+                    <path d="M150 590 Q210 520 260 585 T390 590"/>
+                    <path d="M105 285 Q55 340 110 390 M490 260 Q550 325 490 385"/>
+                    <path d="M300 585 l0 55 m-18 -18 l18 18 18 -18"/>
+                </g>
+                <g fill="#ffcf9a" filter="url(#ahaEonGlow)">
+                    <path d="M185 155 l8 20 20 8 -20 8 -8 20 -8 -20 -20 -8 20 -8Z"/>
+                    <path d="M455 500 l7 17 17 7 -17 7 -7 17 -7 -17 -17 -7 17 -7Z"/>
+                    <circle cx="115" cy="565" r="5"/><circle cx="500" cy="220" r="5"/>
+                    <circle cx="375" cy="80" r="4"/><circle cx="205" cy="450" r="4"/>
+                </g>
+            </g>
+        </svg>
+                <div class="aha-stars"></div>
+
+        <div class="aha-glow one"></div>
+        <div class="aha-glow two"></div>
+        <div class="aha-glow three"></div>
+
+        <div class="aha-ribbon one"></div>
+        <div class="aha-ribbon two"></div>
+        <div class="aha-ribbon three"></div>
+
+        <span class="aha-mask one">🎭</span>
+        <span class="aha-mask two">🎭</span>
+        <span class="aha-mask three">✧</span>
+
+        <span class="aha-sparkle one">✦</span>
+        <span class="aha-sparkle two">✧</span>
+        <span class="aha-sparkle three">✦</span>
+
+    </div>
+
+    <!-- =====================================
+         NAVBAR
+    ===================================== -->
+
+    <nav class="erp-navbar">
+
+        <div class="erp-brand-container">
+
+            <a href="/" class="erp-brand">
+
+                <span class="erp-brand-icon">🎭</span>
+
+                <span>
+                    ERP
+                    <span class="erp-brand-django">Django</span>
+                </span>
+
+            </a>
+
+            <div class="erp-name">
+                Braulio H.P
+            </div>
+
+        </div>
+
+        <div class="erp-nav-links">
+
+            <a class="erp-nav-link"
+               href="{% url 'productos:lista' %}">
+                📦 Productos
+            </a>
+
+            <a class="erp-nav-link green"
+               href="{% url 'clientes:lista' %}">
+                👥 Clientes
+            </a>
+
+            <a class="erp-nav-link"
+               href="{% url 'proveedores:lista' %}">
+                🚚 Proveedores
+            </a>
+
+            <a class="erp-nav-link green"
+               href="{% url 'ventas:lista' %}">
+                💰 Ventas
+            </a>
+
+            <a class="erp-nav-link"
+               href="{% url 'reportes:inicio' %}">
+                📊 Reportes
+            </a>
+
+            <a class="erp-nav-link green"
+               href="{% url 'catalogo:catalogo' %}">
+                🛒 Tienda
+            </a>
+
+            {% if carrito_total_items > 0 %}
+
+                <a class="erp-nav-link"
+                   href="{% url 'catalogo:carrito' %}">
+                    🛍️ Carrito ({{ carrito_total_items }})
+                </a>
+
+            {% endif %}
+
+            <a class="erp-nav-link"
+               href="/admin/">
+                ⚙️ Admin
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <a class="erp-nav-link login"
+                   href="/accounts/logout/">
+                    🚪 Salir ({{ user.username }})
+                </a>
+
+            {% else %}
+
+                <a class="erp-nav-link login"
+                   href="/accounts/login/">
+                    🚪 Entrar
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+    <!-- =====================================
+         MENSAJES
+    ===================================== -->
+
+    {% if messages %}
+
+        <div class="container mt-3 erp-messages">
+
+            {% for m in messages %}
+
+                <div
+                    class="erp-alert-{% if m.tags == 'error' %}danger{% elif m.tags == 'success' %}success{% else %}info{% endif %}"
+                    role="alert"
+                >
+
+                    <span>{{ m }}</span>
+
+                    <button
+                        onclick="this.parentElement.style.display='none'"
+                        style="
+                            float:right;
+                            background:none;
+                            border:none;
+                            color:inherit;
+                            cursor:pointer;
+                            font-size:20px;
+                        "
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+    <!-- =====================================
+         CONTENIDO
+    ===================================== -->
+
+    <main class="erp-main">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <!-- =====================================
+         FOOTER
+    ===================================== -->
+
+    <footer class="erp-footer">
+
+        ✦ ERP Django · Django 4.2 LTS · Fable 5 AzulERP · CBTis198 ✦
+
+    </footer>
+
+    <!-- BOOTSTRAP JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>
